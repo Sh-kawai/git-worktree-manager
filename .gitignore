@@ -3,6 +3,7 @@
 
 !.gitignore
 !AGENTS.md
+!README.md
 !.worktree-shared.sample.toml
 
 !.codex/
@@ -27,6 +28,9 @@ docs/*
 !git-worktree/
 git-worktree/*
 !git-worktree/.gitkeep
+!git-worktree/AGENTS.md
+!git-worktree/.codex/
+!git-worktree/.codex/**
 
 # typo で作成された場合も中身は追跡しない。
 git-woktree/

@@ -1,21 +1,18 @@
-# Local Codex configuration for the worktree parent directory.
-# This file is intentionally outside each Git worktree.
+# Local Codex configuration for the worktree container directory.
 
-default_permissions = "worktree-parent"
+default_permissions = "worktree-container"
 approval_policy = "on-request"
 
-[permissions.worktree-parent.filesystem]
+[permissions.worktree-container.filesystem]
 ":minimal" = "read"
 ":tmpdir" = "write"
 ":slash_tmp" = "write"
 glob_scan_max_depth = 8
 
-[permissions.worktree-parent.filesystem.":workspace_roots"]
+[permissions.worktree-container.filesystem.":workspace_roots"]
 "." = "write"
-"git-worktree" = "read"
-"_shared" = "read"
-"git-worktree/main" = "deny"
-"git-worktree/develop" = "deny"
+"main" = "deny"
+"develop" = "deny"
 "**/.env" = "deny"
 "**/.env.local" = "deny"
 "**/.env.*.local" = "deny"
@@ -25,7 +22,7 @@ glob_scan_max_depth = 8
 "**/*_rsa" = "deny"
 "**/*_ed25519" = "deny"
 
-[permissions.worktree-parent.network]
+[permissions.worktree-container.network]
 enabled = false
 
 [shell_environment_policy]

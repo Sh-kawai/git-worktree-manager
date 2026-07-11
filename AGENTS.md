@@ -1,20 +1,22 @@
 # Codex 作業ルール
 
-このディレクトリは、Git worktree で作成したブランチ別フォルダを `git-worktree/` 配下にまとめる Codex 用の親ディレクトリです。
+このリポジトリは、複数の Git worktree を `git-worktree/` 配下に置くための親リポジトリです。
 
-## CLAUDE.md の扱い
-
-- Codex は、各 worktree 内の `CLAUDE.md` をプロジェクト知識・業務ルール・実装制約の詳細版として扱う。
-- 実装、仕様判断、Oracle、機密データ、業務ルールに関係する作業では、該当 worktree の `CLAUDE.md` の必要範囲を参照する。
-- トークン使用量を抑えるため、常に `CLAUDE.md` 全体を読むのではなく、作業に関係する章だけを参照する。
-- この `AGENTS.md` と `CLAUDE.md` が矛盾する場合は、編集せずユーザーに確認する。
+このリポジトリ自体は、`git-worktree/` 内の各プロジェクトの仕様、業務ルール、実装詳細を管理対象にしません。
 
 ## 作業対象
 
-- `git-worktree/main/` と `git-worktree/develop/` は直接編集しない。
-- プログラム変更は、`git-worktree/develop` から作成した `feat/*` ブランチや `fix/*` の worktree で行う。
-- 編集前に `pwd`、`git branch --show-current`、`git status --short` で作業場所と状態を確認する。
-- 作業場所が `git-worktree/main/` または `git-worktree/develop/` の場合、調査だけに留め、編集前にユーザーへ作業用 `feat/*` や `fix/*` worktree の指定または作成方針を確認する。
+- このリポジトリで扱うのは、worktree 配置を支える管理ファイルとスクリプトに限定する。
+- `git-worktree/` 配下の中身は、原則としてこのリポジトリの作業対象外とする。
+- `_shared/common/` と `_shared/worktrees/` 配下の実データは、原則としてこのリポジトリの作業対象外とする。
+- 各 worktree 内の `CLAUDE.md`、`AGENTS.md`、README、実装ファイルは、その worktree 側のルールとして扱い、この親リポジトリの判断材料にしない。
+
+## Git 管理
+
+- このリポジトリでは、管理用ファイルだけを Git に含める。
+- `git-worktree/`、`_shared/common/`、`_shared/worktrees/`、`docs/` の中身は `.gitkeep` を除き追跡しない。
+- `.worktree-shared.toml` はローカル設定として扱い、Git には含めない。
+- 共有用のひな形は `.worktree-shared.sample.toml` として管理する。
 
 ## 編集前承認
 
@@ -26,7 +28,6 @@
 
 - `.env`、`.env.*`、秘密鍵ファイルは読まない。
 - API キー、DB パスワード、トークン、社内認証情報を出力しない。
-- 認証情報が必要な処理は、利用者のターミナルで 1Password CLI 経由で実行する。
 
 ## コードコメント
 
