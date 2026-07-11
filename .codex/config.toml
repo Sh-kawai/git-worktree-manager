@@ -1,0 +1,44 @@
+# Local Codex configuration for the worktree parent directory.
+# This file is intentionally outside each Git worktree.
+
+default_permissions = "worktree-parent"
+approval_policy = "on-request"
+
+[permissions.worktree-parent.filesystem]
+":minimal" = "read"
+":tmpdir" = "write"
+":slash_tmp" = "write"
+glob_scan_max_depth = 8
+
+[permissions.worktree-parent.filesystem.":workspace_roots"]
+"." = "write"
+"main" = "read"
+"develop" = "read"
+"_shared" = "read"
+"**/.env" = "deny"
+"**/.env.local" = "deny"
+"**/.env.*.local" = "deny"
+"**/.env.1password" = "deny"
+"**/*.pem" = "deny"
+"**/*.key" = "deny"
+"**/*_rsa" = "deny"
+"**/*_ed25519" = "deny"
+
+[permissions.worktree-parent.network]
+enabled = false
+
+[shell_environment_policy]
+inherit = "core"
+ignore_default_excludes = false
+exclude = [
+  "*KEY*",
+  "*SECRET*",
+  "*TOKEN*",
+  "*PASSWORD*",
+  "ANTHROPIC_API_KEY",
+  "BACKLOG_API_KEY",
+  "BRIDGE_SECRET",
+  "CODEX_API_KEY",
+  "OPENAI_API_KEY",
+  "ORACLE_*",
+]

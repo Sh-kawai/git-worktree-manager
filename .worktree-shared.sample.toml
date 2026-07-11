@@ -1,0 +1,19 @@
+[shared]
+# Shared data is stored outside individual Git worktrees.
+root = "_shared"
+
+[[link]]
+path = "data"
+mode = "shared"
+kind = "dir"
+
+[[link]]
+path = "results"
+mode = "per_worktree"
+kind = "dir"
+
+[[link]]
+path = ".env"
+mode = "shared"
+kind = "file"
+create = false

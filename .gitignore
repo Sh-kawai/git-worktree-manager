@@ -1,0 +1,32 @@
+# まず全体を無視し、Git で管理する親ディレクトリと管理ファイルだけを明示的に許可する。
+*
+
+!.gitignore
+!AGENTS.md
+!.worktree-shared.sample.toml
+
+!.codex/
+!.codex/**
+
+!scripts/
+!scripts/**
+
+!_shared/
+!_shared/common/
+_shared/common/*
+!_shared/common/.gitkeep
+
+!_shared/worktrees/
+_shared/worktrees/*
+!_shared/worktrees/.gitkeep
+
+!docs/
+docs/*
+!docs/.gitkeep
+
+!git-worktree/
+git-worktree/*
+!git-worktree/.gitkeep
+
+# typo で作成された場合も中身は追跡しない。
+git-woktree/
