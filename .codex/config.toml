@@ -19,7 +19,6 @@ glob_scan_max_depth = 8
 "**/.env" = "deny"
 "**/.env.local" = "deny"
 "**/.env.*.local" = "deny"
-"**/.env.1password" = "deny"
 "**/*.pem" = "deny"
 "**/*.key" = "deny"
 "**/*_rsa" = "deny"
