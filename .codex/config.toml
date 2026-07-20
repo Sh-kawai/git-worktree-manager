@@ -10,10 +10,10 @@ approval_policy = "on-request"
 ":slash_tmp" = "write"
 glob_scan_max_depth = 8
 
-[permissions.worktree-parent.filesystem.":workspace_roots"]
+[permissions.worktree-parent.filesystem."/Users/kawai/hibari/111_itotekko_agent"]
 "." = "write"
-"git-worktree" = "read"
 "_shared" = "read"
+"git-worktree" = "write"
 "git-worktree/main" = "read"
 "git-worktree/develop" = "read"
 "**/.env" = "deny"
