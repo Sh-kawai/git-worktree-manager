@@ -8,6 +8,11 @@ approval_policy = "on-request"
 ":minimal" = "read"
 ":tmpdir" = "write"
 ":slash_tmp" = "write"
+
+"~/.codex/skills" = "read"
+"~/.codex/plugins/cache" = "read"
+"~/.codex/templates" = "read"
+
 glob_scan_max_depth = 8
 
 [permissions.worktree-parent.filesystem."/Users/kawai/hibari/111_itotekko_agent"]
