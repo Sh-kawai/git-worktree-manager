@@ -3,7 +3,6 @@
 
 default_permissions = "worktree-parent"
 approval_policy = "on-request"
-approvals_reviewer = "auto_review" # /goal用
 
 [permissions.worktree-parent.filesystem]
 ":minimal" = "read"
@@ -32,17 +31,7 @@ glob_scan_max_depth = 8
 "**/*_ed25519" = "deny"
 
 [permissions.worktree-parent.network]
-#enabled = false
-enabled = true # /goal用
-
-[permissions.worktree-parent.network.domains] # ここの項目全体が/goal用
-"www.kaggle.com" = "allow"
-"pypi.org" = "allow"
-"files.pythonhosted.org" = "allow"
-"download.pytorch.org" = "allow"
-"github.com" = "allow"
-"raw.githubusercontent.com" = "allow"
-"objects.githubusercontent.com" = "allow"
+enabled = false
 
 [shell_environment_policy]
 inherit = "core"

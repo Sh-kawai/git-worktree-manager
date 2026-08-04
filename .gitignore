@@ -5,6 +5,8 @@
 !AGENTS.md
 !README.md
 !.worktree-shared.sample.toml
+# config.toml.template から生成されるが、Git 管理対象外。
+!.codex/config.toml
 
 !.codex/
 !.codex/**
