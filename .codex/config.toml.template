@@ -14,6 +14,9 @@ default_subagent_reasoning_effort = "high"
 ":tmpdir" = "write"
 ":slash_tmp" = "write"
 
+"/Library/Developer/CommandLineTools" = "read"
+"~/.pyenv" = "read"
+
 "~/.codex/skills" = "read"
 "~/.codex/plugins/cache" = "read"
 "~/.codex/templates" = "read"
