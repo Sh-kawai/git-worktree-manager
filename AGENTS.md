@@ -27,6 +27,20 @@
 - `.worktree-shared.toml` はローカル設定として扱い、Git には含めない。
 - 共有用のひな形は `.worktree-shared.sample.toml` として管理する。
 
+### コミットメッセージ規約
+
+```
+<type>: <概要>
+
+type:
+  feat     新機能
+  fix      バグ修正
+  refactor リファクタリング
+  docs     ドキュメント
+  ci       CI/CD
+  chore    その他
+```
+
 ## 編集前承認
 
 - ファイル編集の前に、必ず変更方針を提示する。
