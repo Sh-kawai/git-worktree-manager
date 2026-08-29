@@ -6,10 +6,8 @@ approval_policy = "on-request"
 approvals_reviewer = "user"
 allow_login_shell = false
 
-
 [features]
 skill_mcp_dependency_install = false
-
 
 [agents]
 enabled = true
@@ -24,6 +22,7 @@ default_subagent_reasoning_effort = "high"
 "/Library/Developer/CommandLineTools" = "read"
 "~/.pyenv" = "read"
 
+"~/.agents/skills" = "read"
 "~/.codex/skills" = "read"
 "~/.codex/plugins/cache" = "read"
 "~/.codex/templates" = "read"
