@@ -3,6 +3,13 @@
 
 default_permissions = "worktree-parent"
 approval_policy = "on-request"
+approvals_reviewer = "user"
+allow_login_shell = false
+
+
+[features]
+skill_mcp_dependency_install = false
+
 
 [agents]
 enabled = true
@@ -22,6 +29,21 @@ default_subagent_reasoning_effort = "high"
 "~/.codex/templates" = "read"
 "~/.codex/attachments" = "read"
 
+"~/.ssh" = "deny"
+"~/.aws" = "deny"
+"~/.azure" = "deny"
+"~/.config/gcloud" = "deny"
+"~/.config/gh" = "deny"
+
+"~/.git-credentials" = "deny"
+"~/.netrc" = "deny"
+
+"~/.docker" = "deny"
+"~/.kube" = "deny"
+
+"~/Library/Keychains" = "deny"
+
+
 glob_scan_max_depth = 8
 
 [permissions.worktree-parent.filesystem.":workspace_roots"]
@@ -30,6 +52,12 @@ glob_scan_max_depth = 8
 "git-worktree" = "write"
 "git-worktree/main" = "read"
 "git-worktree/develop" = "read"
+
+".git" = "read"
+".codex" = "read"
+"AGENTS.md" = "read"
+"CLAUDE.md" = "read"
+
 "**/.env" = "deny"
 "**/.env.local" = "deny"
 "**/.env.*.local" = "deny"
@@ -37,6 +65,9 @@ glob_scan_max_depth = 8
 "**/*.key" = "deny"
 "**/*_rsa" = "deny"
 "**/*_ed25519" = "deny"
+"**/.npmrc" = "deny"
+"**/.pypirc" = "deny"
+"**/.netrc" = "deny"
 
 [permissions.worktree-parent.network]
 enabled = false
@@ -49,10 +80,27 @@ exclude = [
   "*SECRET*",
   "*TOKEN*",
   "*PASSWORD*",
+  "*PASS*",
   "ANTHROPIC_API_KEY",
   "BACKLOG_API_KEY",
   "BRIDGE_SECRET",
   "CODEX_API_KEY",
   "OPENAI_API_KEY",
+  "AWS_*",
+  "AZURE_*",
+  "GITHUB_*",
+  "GH_TOKEN",
+  "GOOGLE_APPLICATION_CREDENTIALS",
+  "NPM_TOKEN",
+  "PYPI_*",
+  "DATABASE_URL",
+  "POSTGRES_URL",
+  "REDIS_URL",
+  "SSH_AUTH_SOCK",
   "ORACLE_*",
 ]
+
+[apps._default]
+destructive_enabled = false
+open_world_enabled = false
+default_tools_approval_mode = "prompt"
