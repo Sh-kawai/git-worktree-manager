@@ -4,6 +4,15 @@ Git worktree をまとめて配置するための親リポジトリです。
 
 このリポジトリは、`git-worktree/` 配下に置く各 worktree の中身や業務ルールを管理しません。管理するのは、worktree の置き場所、共有データのリンク設定、補助スクリプト、Codex 用の作業ルールだけです。
 
+## Codex 用文書の責務
+
+- `AGENTS.md`: 親管理リポジトリで常に守る作業範囲と安全規則
+- `git-worktree/AGENTS.md`: `main`・`develop` を参照専用にするなど、worktree 配置上の追加規則
+- 各 worktree の `AGENTS.md`: その製品リポジトリ固有の常時適用ルール
+- `.codex/guides/`: 特定の作業でだけ参照する、親管理リポジトリ独自の Codex 用ガイド
+
+`.codex/guides/` は Codex が自動で読み込む予約ディレクトリではありません。必要なガイドは `AGENTS.md` に記載した条件付きリンクから参照します。
+
 ## ディレクトリ構成
 
 ```text
