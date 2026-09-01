@@ -58,8 +58,7 @@ glob_scan_max_depth = 8
 "CLAUDE.md" = "read"
 
 "**/.env" = "deny"
-"**/.env.local" = "deny"
-"**/.env.*.local" = "deny"
+"**/.env.*" = "deny"
 "**/*.pem" = "deny"
 "**/*.key" = "deny"
 "**/*_rsa" = "deny"
