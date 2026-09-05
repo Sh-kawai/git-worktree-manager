@@ -21,6 +21,8 @@ default_subagent_reasoning_effort = "high"
 
 "/Library/Developer/CommandLineTools" = "read"
 "~/.pyenv" = "read"
+"/opt/homebrew/Cellar/uv" = "read"
+"~/.local/share/uv/python" = "read"
 
 "~/.agents/skills" = "read"
 "~/.codex/skills" = "read"
