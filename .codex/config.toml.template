@@ -34,10 +34,11 @@ default_subagent_reasoning_effort = "high"
 "~/.aws" = "deny"
 "~/.azure" = "deny"
 "~/.config/gcloud" = "deny"
-"~/.config/gh" = "deny"
+"~/.config/gh" = "read"
 
 "~/.git-credentials" = "deny"
 "~/.netrc" = "deny"
+"~/.gitconfig" = "read"
 
 "~/.docker" = "deny"
 "~/.kube" = "deny"
@@ -56,6 +57,7 @@ glob_scan_max_depth = 8
 
 ".git" = "read"
 ".codex" = "read"
+".agents" = "read"
 "AGENTS.md" = "read"
 "CLAUDE.md" = "read"
 
@@ -70,7 +72,8 @@ glob_scan_max_depth = 8
 "**/.netrc" = "deny"
 
 [permissions.worktree-parent.network]
-enabled = false
+enabled = true
+# 許可するネットワークアクセス先: /etc/codex/requirements.toml
 
 [shell_environment_policy]
 inherit = "core"

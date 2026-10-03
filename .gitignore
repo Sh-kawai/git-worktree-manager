@@ -12,6 +12,9 @@
 # config.toml.template から生成されるが、Git 管理対象外。
 .codex/config.toml
 
+!.agents/
+!.agents/**
+
 !scripts/
 !scripts/**
 
