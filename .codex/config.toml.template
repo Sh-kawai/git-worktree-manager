@@ -23,6 +23,8 @@ default_subagent_reasoning_effort = "high"
 "~/.pyenv" = "read"
 "/opt/homebrew/Cellar/uv" = "read"
 "~/.local/share/uv/python" = "read"
+"/opt/homebrew/bin/gh" = "read"
+"/opt/homebrew/Cellar/gh" = "read"
 
 "~/.agents/skills" = "read"
 "~/.codex/skills" = "read"
