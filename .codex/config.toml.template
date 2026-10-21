@@ -22,7 +22,21 @@ default_subagent_reasoning_effort = "high"
 "/Library/Developer/CommandLineTools" = "read"
 "~/.pyenv" = "read"
 "/opt/homebrew/Cellar/uv" = "read"
+
+# 起動時に参照するHomebrewのリンクと実体を読み取り可能にする。
+"/opt/homebrew/bin/uv" = "read"
+"/opt/homebrew/opt/uv" = "read"
+"/opt/homebrew/opt/pyenv" = "read"
+"/opt/homebrew/Cellar/pyenv" = "read"
+"/opt/homebrew/opt/openssl@3" = "read"
+"/opt/homebrew/Cellar/openssl@3" = "read"
+
 "~/.local/share/uv/python" = "read"
+
+# 通常のローカル検証で使う既存のキャッシュと付属実行環境。
+"~/.cache/uv" = "write"
+"~/.cache/codex-runtimes" = "read"
+
 "/opt/homebrew/bin/gh" = "read"
 "/opt/homebrew/Cellar/gh" = "read"
 
