@@ -37,9 +37,9 @@ worktree_dir="${2:-${manager_root}/git-worktree/${default_dir}}"
 base="${3:-develop}"
 
 case "$branch" in
-  feat/*|fix/*|chore/*|docs/*|test/*|refactor/*) ;;
+  feat/*|exp/*|fix/*|chore/*|docs/*|test/*|refactor/*) ;;
   *)
-    echo "error: branch should usually start with feat/, fix/, chore/, docs/, test/, or refactor/" >&2
+    echo "error: branch should usually start with feat/, exp/, fix/, chore/, docs/, test/, or refactor/" >&2
     exit 1
     ;;
 esac
