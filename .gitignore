@@ -40,3 +40,11 @@ git-worktree/*
 
 # typo で作成された場合も中身は追跡しない。
 git-woktree/
+
+# developを参照する新規入口・切替時の退避は各自のローカル設定。
+# 既に追跡済みのファイルは、この除外では追跡解除されない。
+.agents/skill-backups/
+.agents/skills/*
+
+# Pythonの生成キャッシュ
+__pycache__/

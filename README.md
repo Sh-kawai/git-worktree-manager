@@ -102,3 +102,7 @@ gh repo create git-worktree-manager --private --source=. --remote=origin --push
 git remote add origin git@github.com:<user>/<repo>.git
 git push -u origin main
 ```
+
+## 共有Skillのセットアップ
+
+親プロジェクトから develop の共有Skillを利用するには、[共有Skillのセットアップガイド](.codex/guides/development-skills.md)を参照してください。
