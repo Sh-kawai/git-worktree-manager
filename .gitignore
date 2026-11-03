@@ -48,3 +48,6 @@ git-woktree/
 
 # Pythonの生成キャッシュ
 __pycache__/
+
+# 個人用のGit実行許可ルール
+/.codex/rules/local-git.rules
