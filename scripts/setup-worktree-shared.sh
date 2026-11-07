@@ -107,7 +107,12 @@ for index, entry in enumerate(links, start=1):
     if not isinstance(create, bool):
         fail(f"link {rel!r} create must be true or false")
 
-    source = (common_root if mode == "shared" else worktree_root) / rel
+    # 参照名と実際の格納先を分けられるようにし、既存設定は同名のまま扱う。
+    source_rel = entry.get("source", rel)
+    if not isinstance(source_rel, str) or not is_safe_relative_path(source_rel):
+        fail(f"link {rel!r} has an unsafe source: {source_rel!r}")
+
+    source = (common_root if mode == "shared" else worktree_root) / source_rel
     dest = worktree_dir / rel
 
     if kind == "dir":

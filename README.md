@@ -52,6 +52,17 @@ Git worktree をまとめて配置するための親リポジトリです。
 - `.worktree-shared.toml`
 - `.env` や秘密鍵などの認証情報
 
+## AI運用セット
+
+既存の厳格設定は維持し、プロジェクトごとに厳格版・自律版を選べます。設定・AIの権限範囲・作業手順を一括生成します。未選択時は厳格版です。
+
+```sh
+python3 scripts/setup-project.py --policy autonomous
+python3 scripts/setup-project.py --policy autonomous --apply
+```
+
+選択内容と生成物はローカル専用です。更新時は引数なしで前回の選択を使います。手編集を検出すると全体の適用を止めます。導入・製品側の参照・更新手順は[運用セットの説明](.codex/templates/README.md)を参照してください。
+
 ## 初期設定
 
 共有リンク設定を使う場合は、サンプルをコピーしてローカル設定を作成します。
@@ -61,6 +72,8 @@ cp .worktree-shared.sample.toml .worktree-shared.toml
 ```
 
 `.worktree-shared.toml` はローカル設定として扱い、Git には含めません。
+
+各`[[link]]`の`path`はworktree内の参照名です。任意の`source`で、共有領域（`shared`なら`common/`、`per_worktree`なら該当worktreeの領域）内の相対的な格納先を指定できます。省略時は`path`と同じ名前、`source = "."`なら領域の直下を参照します。
 
 ## 新しい worktree を作る
 

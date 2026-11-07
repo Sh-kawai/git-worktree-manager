@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# 作成方法と既定の配置・基準を表示する。
 usage() {
   cat <<'USAGE'
 Usage:
@@ -35,6 +36,13 @@ branch="$1"
 default_dir="${branch//\//-}"
 worktree_dir="${2:-${manager_root}/git-worktree/${default_dir}}"
 base="${3:-develop}"
+if [[ "$worktree_dir" != /* ]]; then
+  worktree_dir="${PWD}/${worktree_dir}"
+fi
+if [[ "$(dirname "$worktree_dir")" != "${manager_root}/git-worktree" ]]; then
+  echo "error: worktree must be directly under ${manager_root}/git-worktree" >&2
+  exit 1
+fi
 
 case "$branch" in
   feat/*|exp/*|fix/*|chore/*|docs/*|test/*|refactor/*) ;;
@@ -43,6 +51,12 @@ case "$branch" in
     exit 1
     ;;
 esac
+
+# 検証ブランチは親featを明示し、developから誤って作らない。
+if [[ "$branch" == exp/* && ( $# -lt 3 || "$base" != feat/* ) ]]; then
+  echo "error: exp branches require an explicit feat/* base as the third argument" >&2
+  exit 1
+fi
 
 if [[ -e "$worktree_dir" ]]; then
   echo "error: worktree directory already exists: $worktree_dir" >&2
@@ -57,3 +71,11 @@ fi
 
 git -C "$source_worktree" worktree add -b "$branch" "$worktree_dir" "$base"
 WORKTREE_SHARED_ROOT="$manager_root" "${script_dir}/setup-worktree-shared.sh" "$worktree_dir"
+
+# 方針参照に対応した製品では、保存済みの運用セットを新しい作業場所へ適用する。
+if [[ -f "${worktree_dir}/AGENTS.md" ]] && grep -qF '.codex/guides/project-policy.md' "${worktree_dir}/AGENTS.md"; then
+  "${PYTHON:-python3}" "${manager_root}/scripts/setup-project.py" \
+    --worktree "git-worktree/$(basename "$worktree_dir")" --apply
+else
+  echo "note: AGENTS.mdに運用方針の参照がないため、サイト側の方針生成は省略しました。"
+fi

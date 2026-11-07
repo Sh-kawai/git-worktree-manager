@@ -1,0 +1,139 @@
+# 自律運用向け。親管理フォルダから起動するCodexに適用する。
+# This file is intentionally outside each Git worktree.
+
+default_permissions = "worktree-parent"
+approval_policy = "on-request"
+approvals_reviewer = "auto_review"
+allow_login_shell = false
+
+[features]
+network_proxy = true
+skill_mcp_dependency_install = false
+
+[agents]
+enabled = true
+
+[permissions.worktree-parent.filesystem]
+":minimal" = "read"
+":tmpdir" = "write"
+":slash_tmp" = "write"
+
+"/Library/Developer/CommandLineTools" = "read"
+"~/.pyenv" = "read"
+"/opt/homebrew/Cellar/uv" = "read"
+
+# 起動時に参照するHomebrewのリンクと実体を読み取り可能にする。
+"/opt/homebrew/bin/uv" = "read"
+"/opt/homebrew/opt/uv" = "read"
+"/opt/homebrew/opt/pyenv" = "read"
+"/opt/homebrew/Cellar/pyenv" = "read"
+"/opt/homebrew/opt/openssl@3" = "read"
+"/opt/homebrew/Cellar/openssl@3" = "read"
+
+"~/.local/share/uv/python" = "read"
+
+# 通常のローカル検証で使う既存のキャッシュと付属実行環境。
+"~/.cache/uv" = "write"
+"~/.npm" = "write"
+"~/Library/Caches" = "write"
+"/opt/homebrew" = "read"
+"~/.cache/codex-runtimes" = "read"
+
+"/opt/homebrew/bin/gh" = "read"
+"/opt/homebrew/Cellar/gh" = "read"
+
+"~/.agents/skills" = "read"
+"~/.codex/skills" = "read"
+"~/.codex/plugins/cache" = "read"
+"~/.codex/templates" = "read"
+"~/.codex/attachments" = "read"
+
+"~/.ssh" = "deny"
+"~/.aws" = "deny"
+"~/.azure" = "deny"
+"~/.config/gcloud" = "deny"
+"~/.config/gh" = "read"
+
+"~/.git-credentials" = "deny"
+"~/.netrc" = "deny"
+"~/.gitconfig" = "read"
+
+"~/.docker" = "deny"
+"~/.kube" = "deny"
+
+"~/Library/Keychains" = "deny"
+
+
+glob_scan_max_depth = 8
+
+[permissions.worktree-parent.filesystem.":workspace_roots"]
+"." = "write"
+"_shared" = "read"
+"git-worktree" = "write"
+"git-worktree/main" = "read"
+"git-worktree/develop" = "read"
+
+".git" = "write"
+".codex" = "write"
+".agents" = "write"
+"AGENTS.md" = "write"
+"CLAUDE.md" = "write"
+
+# 参照用worktreeの内容を保護しつつ、Gitの管理情報はローカル操作に使う。
+"git-worktree/main/.git" = "write"
+
+"**/.env" = "deny"
+"**/.env.local" = "deny"
+"**/.env.development" = "deny"
+"**/.env.development.local" = "deny"
+"**/.env.test" = "deny"
+"**/.env.test.local" = "deny"
+"**/.env.production" = "deny"
+"**/.env.production.local" = "deny"
+"**/*.pem" = "deny"
+"**/*.key" = "deny"
+"**/*_rsa" = "deny"
+"**/*_ed25519" = "deny"
+"**/.npmrc" = "deny"
+"**/.pypirc" = "deny"
+"**/.netrc" = "deny"
+
+[permissions.worktree-parent.network]
+enabled = true
+# 管理者側の制約は引き続き優先される。
+[permissions.worktree-parent.network.domains]
+"*" = "allow"
+
+[shell_environment_policy]
+inherit = "core"
+ignore_default_excludes = false
+exclude = [
+  "*KEY*",
+  "*SECRET*",
+  "*TOKEN*",
+  "*PASSWORD*",
+  "*PASS*",
+  "ANTHROPIC_API_KEY",
+  "BACKLOG_API_KEY",
+  "BRIDGE_SECRET",
+  "CODEX_API_KEY",
+  "OPENAI_API_KEY",
+  "AWS_*",
+  "AZURE_*",
+  "GITHUB_*",
+  "GH_TOKEN",
+  "GOOGLE_APPLICATION_CREDENTIALS",
+  "NPM_TOKEN",
+  "PYPI_*",
+  "DATABASE_URL",
+  "POSTGRES_URL",
+  "REDIS_URL",
+  "SSH_AUTH_SOCK",
+  "ORACLE_*",
+]
+
+[apps._default]
+approvals_reviewer = "user"
+destructive_enabled = false
+open_world_enabled = false
+default_tools_approval_mode = "prompt"

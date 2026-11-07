@@ -3,6 +3,7 @@
 
 !.gitignore
 !AGENTS.md
+!CLAUDE.md
 !README.md
 !.worktree-shared.sample.toml
 
@@ -51,3 +52,13 @@ __pycache__/
 
 # 個人用のGit実行許可ルール
 /.codex/rules/local-git.rules
+# 運用セットの正本。生成物と選択内容は各端末で管理する。
+.project-policy.toml
+.codex/template-state.json
+
+# Python検証の生成物。
+**/__pycache__/
+*.pyc
+
+.codex/guides/project-policy.md
+.codex/guides/project-workflow.md

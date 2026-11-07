@@ -4,6 +4,8 @@ root = "_shared"
 
 [[link]]
 path = "data"
+# 格納先を参照名と変える場合だけ指定する。"." はcommon直下を参照する。
+# source = "."
 mode = "shared"
 kind = "dir"
 
