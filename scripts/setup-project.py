@@ -6,6 +6,12 @@
 サイトへの適用: 上記に --worktree git-worktree/feat-example を追加する。
 引数なしではローカルの選択を使い、未選択ならstrict。既定は確認だけ。
 選択は.project-policy.toml、生成履歴は.codex/template-state.jsonへ保存する。
+
+案件固有の既存設定を保持する場合:
+python3 scripts/setup-project.py --policy strict --preserve-config --apply
+この選択は生成履歴に保存され、以後もconfig.tomlは更新しない。
+設定は手動管理となり、テンプレートの更新は反映しない。
+設定との不整合を避けるため、自律運用への切り替えは拒否する。
 """
 from __future__ import annotations
 
@@ -157,18 +163,32 @@ def main() -> int:
     parser.add_argument('--worktree', action='append', default=[],
                         help='方針を適用するgit-worktree直下の相対パス。複数指定可能')
     parser.add_argument('--apply', action='store_true', help='確認済みの生成内容を適用する')
+    parser.add_argument('--preserve-config', action='store_true',
+                        help='既存設定を生成対象から外して保持する（厳格運用のみ、選択を保存）')
     args = parser.parse_args()
     root = Path(__file__).resolve().parent.parent
     try:
         state = read_state(root)
         policy = selected_policy(root, args.policy)
+        preserve_config = args.preserve_config or state.get('preserve_config', False)
+        if preserve_config:
+            if policy != 'strict':
+                raise ValueError('既存設定を保持する場合はstrictを指定してください')
+            config_path = safe_path(root, '.codex/config.toml')
+            if not config_path.is_file():
+                raise ValueError('保持する既存の.codex/config.tomlがありません')
+            tomllib.loads(config_path.read_text())
         # 人が削除済みのworktreeは登録から外し、残っている対象だけを更新する。
         retained = [p for p in state['worktrees'] if safe_path(root, p).exists()]
         worktrees = sorted(set(retained + args.worktree))
         outputs = render(root, policy, worktrees)
+        if preserve_config:
+            outputs.pop('.codex/config.toml')
         changes = check_outputs(root, outputs, state)
         excludes = exclude_plan(root, worktrees)
         print(f'運用方針: {policy}')
+        if preserve_config:
+            print('既存設定を保持: .codex/config.toml（設定の更新は手動管理）')
         for relative in changes:
             print(f'生成・更新: {relative}')
         if not args.apply:
@@ -178,6 +198,7 @@ def main() -> int:
         selection = f'policy = "{policy}"\n'.encode()
         selection_path = safe_path(root, '.project-policy.toml')
         new_state = {'version': 1, 'policy': policy, 'worktrees': worktrees,
+                     'preserve_config': preserve_config,
                      'files': {p: digest(c) for p, c in outputs.items()}}
         serialized = (json.dumps(new_state, ensure_ascii=False, indent=2) + '\n').encode()
         state_path = safe_path(root, '.codex/template-state.json')

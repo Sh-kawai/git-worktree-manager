@@ -81,6 +81,38 @@ class SetupProjectTests(unittest.TestCase):
         self.run_setup('--apply', expected=1)
         self.assertEqual(other.read_text(), 'keep')
 
+    def test_preserve_config_survives_updates_and_rejects_policy_switch(self):
+        """案件固有の設定を保持し、更新後も設定を上書きせず方針切替を止める。"""
+        config = self.root / '.codex/config.toml'
+        original = b'model = "local"\n'
+        config.write_bytes(original)
+        self.run_setup('--preserve-config')
+        self.assertFalse((self.root / '.project-policy.toml').exists())
+        self.run_setup('--preserve-config', '--apply')
+        self.run_setup('--apply')
+        self.assertEqual(config.read_bytes(), original)
+        self.assertIn('厳格運用', (self.root / '.codex/guides/project-policy.md').read_text())
+        self.run_setup('--policy', 'autonomous', '--apply', expected=1)
+        self.assertEqual(config.read_bytes(), original)
+        self.assertIn('strict', (self.root / '.project-policy.toml').read_text())
+        target = self.root / '.codex/guides/project-policy.md'
+        target.write_text('手編集')
+        self.run_setup('--apply', expected=1)
+        self.assertEqual(target.read_text(), '手編集')
+
+    def test_preserve_config_requires_valid_regular_config(self):
+        """保持対象が未作成、不正なTOML、リンクの場合は生成前に停止する。"""
+        self.run_setup('--preserve-config', '--apply', expected=1)
+        config = self.root / '.codex/config.toml'
+        config.write_text('invalid = [')
+        self.run_setup('--preserve-config', '--apply', expected=1)
+        config.unlink()
+        other = self.root / 'other.toml'
+        other.write_text('model = "local"')
+        config.symlink_to(other)
+        self.run_setup('--preserve-config', '--apply', expected=1)
+        self.assertFalse((self.root / '.project-policy.toml').exists())
+
     def test_worktree_policy_is_generated_and_ignored(self):
         """製品固有のAGENTSを保持し、選択方針だけをローカルへ渡す。"""
         site = self.root / 'git-worktree/feat-example'
