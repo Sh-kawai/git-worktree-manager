@@ -71,6 +71,8 @@ glob_scan_max_depth = 8
 "git-worktree/main" = "read"
 "git-worktree/develop" = "read"
 
+"git-worktree/main/.git" = "write"
+
 ".git" = "read"
 ".codex" = "read"
 ".agents" = "read"
@@ -78,7 +80,13 @@ glob_scan_max_depth = 8
 "CLAUDE.md" = "read"
 
 "**/.env" = "deny"
-"**/.env.*" = "deny"
+"**/.env.local" = "deny"
+"**/.env.development" = "deny"
+"**/.env.development.local" = "deny"
+"**/.env.test" = "deny"
+"**/.env.test.local" = "deny"
+"**/.env.production" = "deny"
+"**/.env.production.local" = "deny"
 "**/*.pem" = "deny"
 "**/*.key" = "deny"
 "**/*_rsa" = "deny"
